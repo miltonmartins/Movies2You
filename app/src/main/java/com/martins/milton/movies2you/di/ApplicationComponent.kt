@@ -9,7 +9,14 @@ import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidSupportInjectionModule::class])
+@Component(
+    modules = [
+        AndroidSupportInjectionModule::class,
+        RetrofitModule::class,
+        ApplicationModule::class,
+        MoviesFragModule::class
+    ]
+)
 interface ApplicationComponent : AndroidInjector<Movies2YouApplication> {
 
     @Component.Factory
