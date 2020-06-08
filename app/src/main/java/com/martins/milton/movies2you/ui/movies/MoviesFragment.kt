@@ -28,12 +28,16 @@ class MoviesFragment : DaggerFragment() {
             viewmodel = viewModel
         }
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
-
-        viewDataBinding.viewmodel?.loadMovie()
         viewDataBinding.viewmodel?.movie?.observe(this.viewLifecycleOwner, Observer {
             viewDataBinding.movie = it
         })
 
+        setupAdapter()
+
         return view
+    }
+
+    private fun setupAdapter() {
+        viewDataBinding.rvMovies.adapter = MoviesAdapter(viewModel)
     }
 }

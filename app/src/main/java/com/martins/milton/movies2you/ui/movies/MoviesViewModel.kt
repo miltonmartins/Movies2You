@@ -15,10 +15,15 @@ class MoviesViewModel @Inject constructor(
     private val _movie = MutableLiveData<Movie>()
     val movie: LiveData<Movie> = _movie
 
-    private val _similarMovies = MutableLiveData<List<Movie>>()
+    private val _similarMovies = MutableLiveData<List<Movie>>().apply { value = mutableListOf() }
     val similarMovies: LiveData<List<Movie>> = _similarMovies
 
-    fun loadMovie() {
+    init {
+        loadMovie()
+        loadSimilarMovies()
+    }
+
+    private fun loadMovie() {
         viewModelScope.launch {
             val movie: Movie = moviesRepository.getMovie()
             _movie.value = movie
@@ -27,7 +32,8 @@ class MoviesViewModel @Inject constructor(
 
     private fun loadSimilarMovies() {
         viewModelScope.launch {
-
+            val movies: List<Movie> = moviesRepository.getSimilarMovies().movies
+            _similarMovies.value = movies
         }
     }
 }

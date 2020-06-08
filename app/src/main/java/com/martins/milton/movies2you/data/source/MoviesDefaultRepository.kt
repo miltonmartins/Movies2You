@@ -1,6 +1,7 @@
 package com.martins.milton.movies2you.data.source
 
 import com.martins.milton.movies2you.data.models.Movie
+import com.martins.milton.movies2you.data.models.SimilarMovies
 import com.martins.milton.movies2you.di.ApplicationModule.MoviesRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,9 @@ class MoviesDefaultRepository @Inject constructor(
         }
     }
 
-    override suspend fun getSimilarMovies(): List<Movie> {
-        TODO("Not yet implemented")
+    override suspend fun getSimilarMovies(): SimilarMovies {
+        return withContext(ioDispatcher) {
+            return@withContext remoteDataSource.getSimilarMovies()
+        }
     }
 }

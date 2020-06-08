@@ -1,5 +1,6 @@
 package com.martins.milton.movies2you.data.models
 
+import androidx.annotation.Nullable
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 
@@ -9,6 +10,6 @@ data class Movie(
     @SerializedName("vote_count") val likes: Int,
     @SerializedName("release_date") val releaseDate: Timestamp,
     @SerializedName("genres") val genres: List<Genre>,
-    @SerializedName("poster_path") val poster: String,
-    val similarMovies: List<Movie>
+    @Nullable @SerializedName("genre_ids") val genresIds: List<Int>,
+    @SerializedName("poster_path") val poster: String
 )
