@@ -12,10 +12,6 @@
             type="com.martins.milton.movies2you.data.models.Movie" />
 
         <variable
-            name="numberFormatUtil"
-            type="com.martins.milton.movies2you.utils.NumberFormatUtil" />
-
-        <variable
             name="viewmodel"
             type="com.martins.milton.movies2you.ui.movies.MoviesViewModel" />
 
@@ -91,7 +87,7 @@
         <TextView
             android:id="@+id/text_likes"
             style="@style/text_movie_detail"
-            android:text="@{numberFormatUtil.INSTANCE.getFormattedNumber(movie.likes)}"
+            android:text="@{viewmodel.getLikes(context, movie.likes)}"
             app:layout_constraintBottom_toBottomOf="@id/image_likes"
             app:layout_constraintStart_toEndOf="@id/image_likes"
             app:layout_constraintTop_toTopOf="@id/image_likes"
@@ -109,7 +105,7 @@
         <TextView
             android:id="@+id/text_views"
             style="@style/text_movie_detail"
-            android:text="@{viewmodel.getPopularity(movie.popularity)}"
+            android:text="@{viewmodel.getPopularity(context, movie.popularity)}"
             app:layout_constraintBottom_toBottomOf="@id/image_likes"
             app:layout_constraintStart_toEndOf="@id/image_views"
             app:layout_constraintTop_toTopOf="@id/image_likes"
@@ -127,5 +123,21 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image_likes" />
+
+        <ImageButton
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/icon_button"
+            android:contentDescription="@string/back"
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="5dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Movies2You</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="movie_likes">Movie likes</string>
     <string name="movie_views">Movie views</string>
     <string name="like">like</string>
     <string name="try_again">Try Again</string>
     <string name="no_connection">No connection</string>
+    <string name="back">back</string>
+    <string name="number_likes">%s Likes</string>
+    <string name="number_views">%s Views</string>
 </resources>

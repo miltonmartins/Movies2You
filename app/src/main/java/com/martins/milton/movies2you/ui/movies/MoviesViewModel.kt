@@ -1,9 +1,11 @@
 package com.martins.milton.movies2you.ui.movies
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.martins.milton.movies2you.R
 import com.martins.milton.movies2you.data.models.DataResult
 import com.martins.milton.movies2you.data.models.Genre
 import com.martins.milton.movies2you.data.models.Movie
@@ -79,9 +81,15 @@ class MoviesViewModel @Inject constructor(
         }
     }
 
-    fun getPopularity(popularity: Double): String {
-        val popularityViews: Int = popularity.toString().replace(".", "").toInt()
+    fun getPopularity(context: Context, popularity: Double): String {
+        return context.getString(R.string.number_views, popularity.toString())
+    }
 
-        return NumberFormatUtil.getFormattedNumber(popularityViews)
+    fun getLikes(context: Context, likes: Int): String {
+        return context.getString(R.string.number_likes, NumberFormatUtil.getFormattedNumber(likes))
+    }
+
+    fun getYearFromReleaseDate(date: String): String {
+        return date.split('-')[0]
     }
 }

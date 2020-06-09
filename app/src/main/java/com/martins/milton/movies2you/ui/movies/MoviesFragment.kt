@@ -67,6 +67,10 @@ class MoviesFragment : DaggerFragment() {
         viewDataBinding.buttonTryAgain.setOnClickListener {
             checkConnection()
         }
+
+        viewDataBinding.buttonBack.setOnClickListener {
+            activity?.finish()
+        }
     }
 
     private fun setupAdapter() {
