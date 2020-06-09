@@ -9,7 +9,7 @@ data class Movie(
     @SerializedName("popularity") val popularity: Double,
     @SerializedName("vote_count") val likes: Int,
     @SerializedName("release_date") val releaseDate: Timestamp,
-    @SerializedName("genres") val genres: List<Genre>,
+    @SerializedName("genres") var genres: List<Genre>,
     @Nullable @SerializedName("genre_ids") val genresIds: List<Int>,
     @SerializedName("poster_path") val poster: String
 )

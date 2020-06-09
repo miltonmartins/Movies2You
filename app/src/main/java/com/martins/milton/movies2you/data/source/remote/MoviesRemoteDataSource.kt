@@ -1,5 +1,6 @@
 package com.martins.milton.movies2you.data.source.remote
 
+import com.martins.milton.movies2you.data.models.Genre
 import com.martins.milton.movies2you.data.models.Movie
 import com.martins.milton.movies2you.data.models.SimilarMovies
 import com.martins.milton.movies2you.data.source.MoviesDataSource
@@ -18,5 +19,9 @@ class MoviesRemoteDataSource constructor(
 
     override suspend fun getSimilarMovies(): SimilarMovies = withContext(ioDispatcher) {
         return@withContext moviesApi.getSimilarMovies()
+    }
+
+    override suspend fun getAllGenres(): List<Genre> = withContext(ioDispatcher) {
+        return@withContext moviesApi.getAllGenres()["genres"] ?: mutableListOf()
     }
 }
