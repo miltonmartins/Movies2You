@@ -1,5 +1,6 @@
 package com.martins.milton.movies2you.data.source.remote
 
+import com.martins.milton.movies2you.data.models.DataResult
 import com.martins.milton.movies2you.data.models.Genre
 import com.martins.milton.movies2you.data.models.Movie
 import com.martins.milton.movies2you.data.models.SimilarMovies
@@ -13,15 +14,27 @@ class MoviesRemoteDataSource constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : MoviesDataSource {
 
-    override suspend fun getMovie(): Movie = withContext(ioDispatcher) {
-        return@withContext moviesApi.getMovie()
+    override suspend fun getMovie(): DataResult<Movie> = withContext(ioDispatcher) {
+        return@withContext try {
+            DataResult.Success(moviesApi.getMovie())
+        } catch (e: Exception) {
+            DataResult.Error(e)
+        }
     }
 
-    override suspend fun getSimilarMovies(): SimilarMovies = withContext(ioDispatcher) {
-        return@withContext moviesApi.getSimilarMovies()
+    override suspend fun getSimilarMovies(): DataResult<SimilarMovies> = withContext(ioDispatcher) {
+        return@withContext try {
+            DataResult.Success(moviesApi.getSimilarMovies())
+        } catch (e: Exception) {
+            DataResult.Error(e)
+        }
     }
 
-    override suspend fun getAllGenres(): List<Genre> = withContext(ioDispatcher) {
-        return@withContext moviesApi.getAllGenres()["genres"] ?: mutableListOf()
+    override suspend fun getAllGenres(): DataResult<List<Genre>> = withContext(ioDispatcher) {
+        return@withContext try {
+            DataResult.Success(moviesApi.getAllGenres()["genres"] ?: mutableListOf())
+        } catch (e: Exception) {
+            DataResult.Error(e)
+        }
     }
 }

@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.martins.milton.movies2you.data.models.DataResult
 import com.martins.milton.movies2you.data.models.Genre
 import com.martins.milton.movies2you.data.models.Movie
+import com.martins.milton.movies2you.data.models.SimilarMovies
 import com.martins.milton.movies2you.data.source.MoviesRepository
 import com.martins.milton.movies2you.utils.NumberFormatUtil
 import kotlinx.coroutines.launch
@@ -30,31 +32,44 @@ class MoviesViewModel @Inject constructor(
 
     private fun loadMovie() {
         viewModelScope.launch {
-            val movie: Movie = moviesRepository.getMovie()
-            _movie.value = movie
+            val movieResult: DataResult<Movie> = moviesRepository.getMovie()
+
+            if (movieResult is DataResult.Success) {
+                val movie: Movie = movieResult.data
+                _movie.value = movie
+            }
         }
     }
 
     private fun loadSimilarMovies() {
         viewModelScope.launch {
-            val movies: List<Movie> = moviesRepository.getSimilarMovies().movies
+            val similarMoviesResult: DataResult<SimilarMovies> = moviesRepository.getSimilarMovies()
 
-            if (_allGenres.value?.isNotEmpty()!!) {
-                movies.forEach {
-                    it.genres =
-                        it.genresIds.map { id -> _allGenres.value!!.first { genre -> genre.id == id } }
+            if (similarMoviesResult is DataResult.Success) {
+                val movies: List<Movie> = similarMoviesResult.data.movies
+
+                if (_allGenres.value?.isNotEmpty()!!) {
+                    movies.forEach {
+                        it.genres =
+                            it.genresIds.map { id -> _allGenres.value!!.first { genre -> genre.id == id } }
+                    }
                 }
+
+                _similarMovies.value = movies
             }
 
-            _similarMovies.value = movies
         }
     }
 
     private fun loadAllGenres() {
         viewModelScope.launch {
-            val genres: List<Genre> = moviesRepository.getAllGenres()
+            val genresResult: DataResult<List<Genre>> = moviesRepository.getAllGenres()
 
-            _allGenres.value = genres
+            if (genresResult is DataResult.Success) {
+                val genres: List<Genre> = genresResult.data
+                _allGenres.value = genres
+            }
+
         }
     }
 
